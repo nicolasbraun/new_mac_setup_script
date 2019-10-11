@@ -1,8 +1,9 @@
 # Taps
 tap 'caskroom/cask'
-tap 'caskroom/fonts'
-tap 'caskroom/versions'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
+tap 'heroku/brew' 
 
 # Install CLI Tools
 ## Shell Utilities
@@ -33,7 +34,7 @@ brew 'trash'
 
 ## Dev Utilities
 brew 'diff-so-fancy'
-brew 'heroku-toolbelt'
+brew 'heroku'
 brew 'reattach-to-user-namespace'
 brew 'git'
 brew 'awscli'
