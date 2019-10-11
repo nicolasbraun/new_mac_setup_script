@@ -1,7 +1,7 @@
 # Basic Setup
 ```
-git clone https://bitbucket.org/snippets/edlabtc/4Lkd9/mac-setup.git
-cd mac-setup && sh ./install.sh
+git clone https://gist.github.com/059e210f8fe15e7eadc4a28e8b3e6b27.git setup
+cd setup && sh ./install.sh
 ```
 # Shell Configuration
 
