@@ -9,6 +9,9 @@ echo "Install Homebrew Packages"
 brew tap homebrew/bundle
 brew bundle
 
+echo "Install XCode CLI Tool"
+xcode-select --install
+
 echo "Installing Oh My Zsh"
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
@@ -43,4 +46,4 @@ echo "Enabling Services"
 open /Applications/Alfred\ 3.app
 open /Applications/Gas\ Mask.app
 open /Applications/Clipy.app
-open /Applications/Spectacle.app
+open /Applications/Rectagle.app
