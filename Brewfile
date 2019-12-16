@@ -70,7 +70,7 @@ cask 'macdown'
 brew 'vim', args: ["--with-lua"]
 
 ## Development
-cask 'android-sdk'
+cask 'atext'
 cask 'diffmerge'
 cask 'fastlane'
 cask 'firefox'
