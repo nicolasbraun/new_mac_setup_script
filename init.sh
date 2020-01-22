@@ -43,7 +43,7 @@ git config --global alias.tree "log --graph --full-history --all --color --date=
 
 
 echo "Enabling Services"
-open /Applications/Alfred\ 3.app
+open /Applications/Alfred\ 4.app
 open /Applications/Gas\ Mask.app
 open /Applications/Clipy.app
-open /Applications/Rectagle.app
+open /Applications/Rectangle.app
