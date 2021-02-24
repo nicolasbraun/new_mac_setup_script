@@ -85,21 +85,6 @@ cask 'sequel-pro'
 cask 'psequel'
 cask 'sourcetree'
 
-# Finder Quicklook
-cask 'qlcolorcode'
-cask 'qlstephen'
-cask 'qlmarkdown'
-cask 'quicklook-json'
-cask 'qlimagesize'
-cask 'webpquicklook'
-cask 'suspicious-package'
-cask 'quicklookase'
-cask 'qlvideo'
-cask 'provisionql'
-cask 'quicklookapk'
-cask 'quicklook-csv' #++
-cask 'jupyter-notebook-ql' #++
-
 # Fonts
 cask 'font-source-code-pro-for-powerline'
 cask 'font-source-code-pro'
