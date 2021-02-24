@@ -1,8 +1,6 @@
 # Taps
-tap 'caskroom/cask'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
-tap 'homebrew/bundle'
 tap 'heroku/brew' 
 
 # Install CLI Tools
@@ -17,7 +15,6 @@ brew 'jq'
 brew 'q'
 brew 'docker-compose'
 brew 'ack'
-brew 'the_silver_searcher'
 
 ## Network Utilities
 brew 'htop'
