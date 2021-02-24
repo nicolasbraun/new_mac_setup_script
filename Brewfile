@@ -64,7 +64,7 @@ cask 'namechanger'
 ## Editor
 cask 'visual-studio-code'
 cask 'macdown'
-brew 'vim', args: ["--with-lua"]
+brew 'vim'
 
 ## Development
 cask 'atext'
