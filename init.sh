@@ -8,6 +8,7 @@ then
   
   echo "Please add this public key to Github \n"
   echo "https://github.com/account/ssh \n"
+  echo "Use this command to copy cat ~/.ssh/cat id_rsa.pub | pbcopy
   read -p "Press [Enter] key after this..."
 fi
 
