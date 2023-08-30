@@ -1,0 +1,79 @@
+# Taps
+tap "homebrew/cask"
+tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-versions'
+tap "buo/cask-upgrade"
+
+# set arguments for all 'brew install --cask' commands
+cask_args appdir: "/Applications", require_sha: true
+
+# Install CLI Tools
+## Shell Utilities
+# brew 'coreutils'
+# brew 'findutils'
+# brew 'autojump'
+# brew 'zsh'
+# brew 'zsh-completions'
+# brew 'tmux'
+brew 'jq'
+# brew 'q'
+brew 'docker-compose'
+# brew 'ack'
+
+## Network Utilities
+# brew 'htop'
+# brew 'nmap'
+# brew 'mtr'
+# brew 'wget'
+
+## System Utilities
+# brew 'terminal-notifier'
+# brew 'tree'
+brew 'mackup' # Mac Backup https://github.com/lra/mackup
+brew 'mas' # Mac App Store
+brew 'trash'
+
+# Mac Apps
+## Communication
+cask 'slack'
+cask 'discord'
+
+## Productivity
+cask 'raycast'
+cask 'go2shell'
+cask 'docker'
+cask 'google-chrome'
+# cask 'keycastr' Keystroke for screencast
+cask 'clipy'
+
+## System
+# cask 'skitch' # Screen capture tool with mark up and sharing features
+cask 'the-unarchiver'
+# cask 'coconutbattery'
+cask 'appcleaner'
+cask 'namechanger'
+
+## Editor
+cask 'visual-studio-code'
+
+## Development
+cask 'iterm2'
+cask 'sourcetree'
+cask 'postico' # SQL
+cask 'redisinsight' # REDIS
+
+## Dev Utilities
+brew 'diff-so-fancy'
+# brew 'heroku'
+brew 'git'
+# brew 'awscli'
+brew 'nvm'
+# brew 'node'
+
+# Fonts
+# cask 'font-source-code-pro-for-powerline'
+# cask 'font-source-code-pro'
+# cask 'font-source-sans-pro'
+
+# MAc App Store Apps
+# mas 'XCode', id: 497799835
