@@ -19,7 +19,7 @@ cask 'go2shell'
 
 # Internet
 cask 'google-chrome'
-cask 'arc
+cask 'arc'
 cask 'brave-browser'
 
 ## System
