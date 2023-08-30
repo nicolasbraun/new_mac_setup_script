@@ -36,21 +36,24 @@ brew bundle --file=Brewfile_basics
 
 read -p "Would you like to install personal apps? (Spotify, VLC...) " -n 1 -r
 echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY_PERSONAL =~ ^[Yy]$ ]]
 then
   brew bundle --file=Brewfile_personal
 fi
 
 read -p "Would you like to install Works apps? (Dev stuff mostly) " -n 1 -r
 echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY_WORK =~ ^[Yy]$ ]]
 then
   brew bundle --file=Brewfile_work
+  # NVM & Node
+  PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash'
+  nvm install node
 fi
 
 read -p "Would you like to install Gaming apps? (Bnet steam) " -n 1 -r
 echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY_GAMING =~ ^[Yy]$ ]]
 then
   brew bundle --file=Brewfile_gaming
 fi
@@ -59,7 +62,7 @@ echo "Cleaning up brew"
 brew cask cleanup
 brew cleanup
 
-echo "Configrating Git"
+echo "Configurating Git"
 git config --global user.name "Nicolas Braun"
 git config --global user.email "braunico@gmail.com"
 git config --global merge.tool diffmerge
