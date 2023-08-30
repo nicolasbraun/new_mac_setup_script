@@ -40,7 +40,7 @@ cask 'redisinsight' # REDIS
 ## Dev Utilities
 brew 'diff-so-fancy'
 brew 'git'
-brew 'nvm'
+# brew 'nvm' # Apparently not recommended, done in the init script
 # brew 'node'
 
 # Cloud CLI
