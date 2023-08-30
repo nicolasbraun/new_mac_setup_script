@@ -13,7 +13,7 @@ fi
 
 echo "Installing Homebrew"
 if test ! $(which brew); then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 brew update
 
@@ -76,6 +76,9 @@ git config --global core.editor $(which code)
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 git config --global alias.tree "log --graph --full-history --all --color --date=short --pretty=format:'%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset'"
 
+echo "Done"
+echo "Remember to delete cask using cask zap"
+echo "
 # TODO
 # echo "Copying dotfiles from Github"
 # cd ~
