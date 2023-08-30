@@ -23,8 +23,8 @@ brew update
 echo "Install XCode CLI Tool"
 xcode-select --install
 
-echo "Installing Oh My Zsh"
 if [ -z "${ZSH_VERSION+xxx}" ]
+  echo "Installing Oh My Zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 git clone git@github.com:zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
