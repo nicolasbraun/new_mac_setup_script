@@ -16,6 +16,8 @@ echo "Installing Homebrew"
 if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+export PATH=/opt/homebrew/bin:$PATH
+source ~/.zshrc
 brew update
 
 echo "Install XCode CLI Tool"
