@@ -1,1 +1,55 @@
+# set arguments for all 'brew install --cask' commands
+cask_args appdir: "/Applications", require_sha: true
 
+# Install CLI Tools
+## Shell Utilities
+# brew 'coreutils'
+# brew 'findutils'
+# brew 'autojump'
+brew 'jq'
+# brew 'q'
+brew 'docker-compose'
+# brew 'ack'
+
+## Network Utilities
+# brew 'htop'
+# brew 'nmap'
+# brew 'mtr'
+# brew 'wget'
+
+## System Utilities
+# brew 'terminal-notifier'
+# brew 'tree'
+
+# Mac Apps
+## Communication
+cask 'slack'
+
+## Productivity
+
+## Editor
+cask 'visual-studio-code'
+
+## Development
+cask 'docker'
+cask 'iterm2'
+cask 'sourcetree'
+cask 'postico' # SQL
+cask 'redisinsight' # REDIS
+
+## Dev Utilities
+brew 'diff-so-fancy'
+brew 'git'
+brew 'nvm'
+# brew 'node'
+
+# Cloud CLI
+# brew 'awscli'
+
+# Fonts
+# cask 'font-source-code-pro-for-powerline'
+# cask 'font-source-code-pro'
+# cask 'font-source-sans-pro'
+
+# Mac App Store Apps
+# mas 'XCode', id: 497799835
