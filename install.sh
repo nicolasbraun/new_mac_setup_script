@@ -20,6 +20,43 @@ _colors_green=$(tput setaf 2)
 _colors_cyan=$(tput setaf 6)
 _colors_reset=$(tput sgr0)
 
+
+###########################################
+#                                         #
+#          Homebrew and apps		  #
+#                                         #
+###########################################
+
+
+echo "${_colors_bold}Installing Homebrew...${_colors_reset}"
+if test ! $(which brew); then
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ 	export PATH=/opt/homebrew/bin:$PATH
+else
+	echo "Already installed"
+fi
+source ~/.zshrc
+brew update
+
+# # Xcode CLI
+echo "Install XCode CLI Tool"
+xcode-select --install
+
+# Brew packages
+
+echo "Install Homebrew Packages from BrewFile, this might take a while"
+brew tap homebrew/bundle
+brew bundle --file=Brewfile
+echo "Cleaning up brew"
+brew cleanup
+
+###########################################
+#                                         #
+#               Dotfiles                  #
+#                                         #
+###########################################
+echo "${_colors_bold}Symlinking the dotfiles...${_colors_reset}"
+
 # Get the dotfiles dir in case it's named something else.
 _script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 _dotfiles_dir="${_script_dir}/dotfiles"
@@ -92,56 +129,286 @@ echo ""
 echo "${_colors_green}Dotfiles symlinked.${_colors_reset}"
 echo ""
 
-if [[ $_dotfiles_dir != "$HOME/dotfiles" ]]; then
+if [[ $_dotfiles_dir != "$HOME/my_mac_setup/dotfiles" ]]; then
 	echo "${_colors_red}HEY YOU GOTTA DO THIS TO NOT BREAK STUFF!${_colors_reset}"
 	echo ""
 	echo "You need to modify ${_colors_cyan}.zshrc${_colors_reset} to point to the correct folder."
 	echo ""
-	echo "Replace ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"\$HOME/dotfiles${_colors_reset}\" with: ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"${_dotfiles_dir}\""
+	echo "Replace ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"\$HOME/my_mac_setup/dotfiles${_colors_reset}\" with: ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"${_dotfiles_dir}\""
 	echo ""
 fi
 
-# Mac settings
-./install_mac_settings.sh
+###########################################
+#                                         #
+#               SSH                       #
+#                                         #
+###########################################
 
 # SSH
+echo "${_colors_bold}Creating an SSH Key...${_colors_reset}"
 read -p "Would you like to create a new SSH key? [y/n]" -n 1 -r
 echo # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 	ssh-keygen -t rsa
-
-	echo "SSH key copied to clipboard"
-	echo "Please add this public key to Github \n"
-	echo "https://github.com/account/ssh \n"
+ 	echo "SSH key created."
 	cat ~/.ssh/cat id_rsa.pub | pbcopy
-	read -p "Press [Enter] key after this..."
+ 	echo -e "${_colors_bold}${_colors_cyan}Please add this public key to Github${_dotfiles_dir}${_colors_reset}"
+	echo -e "https://github.com/account/ssh"
+	read -p "Press [Enter] key to continue"
+ else
+  echo "SSH key generation skipped."
+  read -p -e "${_colors_bold}${_colors_cyan}Please ensure the .ssh/config file exists before continuing\nPress enter to continue...${_colors_reset}" -n 1 -r
+  echo ""
 fi
 # Avoid permanent prompt for passphrase
-echo "Host *
+echo -e "Setting SSH config to avoid permanent prompt for passphrase"
+if [ -f ~/.ssh/config ]; then
+  echo "Host *
   UseKeychain yes" >>~/.ssh/config
-
-# BREW
-echo "Installing Homebrew"
-if test ! $(which brew); then
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo "Configuration appended to ~/.ssh/config."
 else
-	echo "Already installed"
+  echo "${_colors_bold}${_colors_red}File ~/.ssh/config does not exist. Please fix and relaunch this script.${_colors_reset}"
 fi
-source ~/.zshrc
-brew update
 
-# # Xcode CLI
-echo "Install XCode CLI Tool"
-xcode-select --install
+###########################################
+#                                         #
+#            MAC OS SETTINGS              #
+#                                         #
+###########################################
 
-# Brew packages
+echo "${_colors_bold}Setting up MACOS Settings.${_colors_reset}"
 
-echo "Install Homebrew Packages from BrewFile, this might take a while"
-brew tap homebrew/bundle
-brew bundle --file=Brewfile
-echo "Cleaning up brew"
-brew cleanup
+#Mostly yaken from https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+echo "${_colors_bold}Setting some MacOS settings...${_colors_reset}"
 
-sh "./install_manual.sh"
+#"Disabling system-wide resume"
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 
-echo "Ready to go, well done"
+#"Disable 'natural' (Lion-style) scrolling"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+#"Disabling automatic termination of inactive apps"
+defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+#"Allow text selection in Quick Look"
+defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+
+#"Disabling OS X Gate Keeper"
+#"(You'll be able to install any app you want from here on, not just Mac App Store apps)"
+sudo spctl --master-disable
+sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+#"Expanding the save panel by default"
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+#"Automatically quit printer app once the print jobs complete"
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+#"Saving to disk (not to iCloud) by default"
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+#"Check for software updates daily, not just once per week"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+#"Disable smart quotes and smart dashes as they are annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+#"Enabling full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+#"Disabling press-and-hold for keys in favor of a key repeat"
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+#"Setting trackpad & mouse speed to a reasonable number"
+defaults write -g com.apple.trackpad.scaling 1.5
+defaults write -g com.apple.mouse.scaling 1.5
+
+#"Enabling subpixel font rendering on non-Apple LCDs"
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
+
+#"Finder: Showing icons for hard drives, servers, and removable media on the desktop"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+
+#"Finder: Showing all filename extensions in Finder by default"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+#"Finder: Disabling the warning when changing a file extension"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+#"Finder: Show hidden files"
+defaults write com.apple.Finder AppleShowAllFiles true
+
+#"Use List view in all Finder windows by default"
+# Other values are `icnv`, `clmv`, ``glyv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+#"Finder : Show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
+#"Finder : Show status bar"
+defaults write com.apple.finder ShowStatusBar -bool true
+
+#"Finder : Search the current folder by default"
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+#"Finder : Keep folders on top when sorting by name"
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+#"Finder: Expand the following File Info panes:
+# “General”, “Open with”, and “Sharing & Permissions”
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+    General -bool true \
+    OpenWith -bool true \
+    Privileges -bool true
+
+#"Finder: Set Desktop as the default location for new Finder windows
+# For other paths, use `PfLo` and `file:///full/path/here/`
+defaults write com.apple.finder NewWindowTarget -string "PfDe"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+
+# Finder: disable window animations and Get Info animations
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+defaults write com.apple.finder QuitMenuItem -bool true
+
+# Disable the warning before emptying the Trash
+# defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+#"Avoiding the creation of .DS_Store files on network volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+#"Enabling snap-to-grid for icons on the desktop and in other icon views"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+#"Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
+defaults write com.apple.dock tilesize -int 36
+
+#"Speeding up Mission Control animations and grouping windows by application"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock "expose-group-by-app" -bool true
+
+#"Setting Dock to auto-hide and removing the auto-hiding delay"
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+#"Setting email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
+defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+
+#"Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default"
+defaults write com.apple.terminal StringEncodings -array 4
+defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
+defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+
+#"Preventing Time Machine from prompting to use new hard drives as backup volume"
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+#"Disable the sudden motion sensor as its not useful for SSDs"
+sudo pmset -a sms 0
+
+#"Speeding up wake from sleep to 24 hours from an hour"
+# http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
+sudo pmset -a standbydelay 86400
+
+#"Disable annoying backswipe in Chrome"
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+
+#"Setting screenshots location to ~/Desktop/Screenshots"
+mkdir "$HOME/Desktop/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Desktop/Screenshots"
+
+#"Setting screenshot format to PNG"
+defaults write com.apple.screencapture type -string "png"
+
+#"Hiding Safari's bookmarks bar by default"
+defaults write com.apple.Safari ShowFavoritesBar -bool false
+
+#"Hiding Safari's sidebar in Top Sites"
+defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+
+#"Disabling Safari's thumbnail cache for History and Top Sites"
+defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+
+#"Enabling Safari's debug menu"
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+#"Making Safari's search banners default to Contains instead of Starts With"
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+
+#"Removing useless icons from Safari's bookmarks bar"
+defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+
+#"Allow hitting the Backspace key to go to the previous page in history"
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
+#"Enabling the Develop menu and the Web Inspector in Safari"
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+
+#"Adding a context menu item for showing the Web Inspector in web views"
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+#"Use `~/Downloads/Incomplete` to store incomplete downloads"
+defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
+defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Downloads/Incomplete"
+
+#"Don't prompt for confirmation before downloading"
+defaults write org.m0k.transmission DownloadAsk -bool false
+
+#"Trash original torrent files"
+defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
+
+#"Hide the donate message"
+defaults write org.m0k.transmission WarningDonate -bool false
+
+#"Hide the legal disclaimer"
+defaults write org.m0k.transmission WarningLegal -bool false
+
+killall Finder
+echo "Done. You may need to reboot for some to take effect."
+
+###########################################
+#                                         #
+#            MANUAL STUFF                 #
+#                                         #
+###########################################
+
+echo "${_colors_bold}There is still some manual stuff to do...${_colors_reset}"
+
+echo "In Keyboard setting"
+echo "Change the shortcut to 'Move focus to next window' Alt+tab is a good one"
+echo "Disable Spotlight."
+read -p "Press [Enter] to open Preferences"
+open "x-apple.systempreferences:com.apple.preference.keyboard"
+
+echo "Launch Raycast and restore your backup file"
+read -p "Press [Enter] to open Raycast"
+open "Applications/RayRaycast.app"
+
+echo "[VSCODE] Login to sync settings"
+read -p "Press [Enter] to open VSCode"
+open "/Applications/Visual\ Studio\ Code.app"
+
+echo "[Firefox]"
+echo "- Login in"
+echo "- Restore sideberry backup"
+read -p "Press [Enter] to open Firefox"
+open "/Applications/Firefox.app"
+
+echo "[Finder]"
+echo "- Set the sidebar favorites"
+read -p "Press [Enter] to finish this installation"
+
+echo "${_colors_bold}${_colors_green}All done! Check for errors and reload if needed.${_colors_reset}"
