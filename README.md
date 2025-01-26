@@ -6,14 +6,15 @@ Mostly inspired from : https://github.com/bradp/dotfiles
 **To Install**
 
 ```shell
-# Clone this repository to ~/Sources (with submodules)
-$ git clone --recursive git@github.com:bradp/dotfiles.git ~/Sources/my_mac_installer
+# Clone this repository to ~/new_mac_setup (with submodules)
+# Use HTTPs URL if you SSH is not set yet!
+$ git clone --recursive https://github.com/nicolasbraun/new_mac_setup.git ~/new_mac_setup
 # Run the installer
-$ bash ~/Sources/install.sh
+$ bash ~/new_mac_setup/install.sh
 ```
 
 **To Update**
 
 ```shell
-$ bash ~/Sources/update.sh
+$ bash ~/update.sh
 ```
