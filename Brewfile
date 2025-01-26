@@ -1,7 +1,4 @@
 # Taps
-tap 'homebrew/cask'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-versions'
 tap "buo/cask-upgrade"
 
 # set arguments for all 'brew install --cask' commands
