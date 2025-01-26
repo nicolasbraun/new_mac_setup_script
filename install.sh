@@ -31,16 +31,10 @@ _colors_reset=$(tput sgr0)
 echo "${_colors_bold}Installing Homebrew...${_colors_reset}"
 if test ! $(which brew); then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
- 	export PATH=/opt/homebrew/bin:$PATH
+ 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
 	echo "Already installed"
 fi
-source ~/.zshrc
-brew update
-
-# # Xcode CLI
-echo "Install XCode CLI Tool"
-xcode-select --install
 
 # Brew packages
 
@@ -152,22 +146,28 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 	ssh-keygen -t rsa
  	echo "SSH key created."
 	cat ~/.ssh/cat id_rsa.pub | pbcopy
- 	echo -e "${_colors_bold}${_colors_cyan}Please add this public key to Github${_dotfiles_dir}${_colors_reset}"
+ 	echo -e "${_colors_bold}${_colors_cyan}Please add this public key to Github${_colors_reset}"
 	echo -e "https://github.com/account/ssh"
 	read -p "Press [Enter] key to continue"
  else
   echo "SSH key generation skipped."
-  read -p -e "${_colors_bold}${_colors_cyan}Please ensure the .ssh/config file exists before continuing\nPress enter to continue...${_colors_reset}" -n 1 -r
   echo ""
 fi
 # Avoid permanent prompt for passphrase
 echo -e "Setting SSH config to avoid permanent prompt for passphrase"
-if [ -f ~/.ssh/config ]; then
-  echo "Host *
-  UseKeychain yes" >>~/.ssh/config
-  echo "Configuration appended to ~/.ssh/config."
+mkdir -p ~/.ssh
+
+# Check if the line already exists in ~/.ssh/config
+if ! grep -q "^UseKeychain yes" ~/.ssh/config 2>/dev/null; then
+  echo "Adding configuration to ~/.ssh/config..."
+  # Append the configuration to the file
+  {
+    echo "Host *"
+    echo "  UseKeychain yes"
+  } >> ~/.ssh/config
+  echo "Configuration added to ~/.ssh/config."
 else
-  echo "${_colors_bold}${_colors_red}File ~/.ssh/config does not exist. Please fix and relaunch this script.${_colors_reset}"
+  echo "Configuration already exists in ~/.ssh/config. No changes made."
 fi
 
 ###########################################
@@ -198,7 +198,7 @@ defaults write com.apple.finder QLEnableTextSelection -bool TRUE
 
 #"Disabling OS X Gate Keeper"
 #"(You'll be able to install any app you want from here on, not just Mac App Store apps)"
-sudo spctl --master-disable
+# sudo spctl --master-disable # Causes error in Mac OS Sequoia
 sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
@@ -330,35 +330,6 @@ defaults write com.apple.screencapture location -string "$HOME/Desktop/Screensho
 
 #"Setting screenshot format to PNG"
 defaults write com.apple.screencapture type -string "png"
-
-#"Hiding Safari's bookmarks bar by default"
-defaults write com.apple.Safari ShowFavoritesBar -bool false
-
-#"Hiding Safari's sidebar in Top Sites"
-defaults write com.apple.Safari ShowSidebarInTopSites -bool false
-
-#"Disabling Safari's thumbnail cache for History and Top Sites"
-defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
-
-#"Enabling Safari's debug menu"
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-
-#"Making Safari's search banners default to Contains instead of Starts With"
-defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
-
-#"Removing useless icons from Safari's bookmarks bar"
-defaults write com.apple.Safari ProxiesInBookmarksBar "()"
-
-#"Allow hitting the Backspace key to go to the previous page in history"
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
-
-#"Enabling the Develop menu and the Web Inspector in Safari"
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
-
-#"Adding a context menu item for showing the Web Inspector in web views"
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 #"Use `~/Downloads/Incomplete` to store incomplete downloads"
 defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
