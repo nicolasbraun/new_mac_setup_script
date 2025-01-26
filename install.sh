@@ -129,12 +129,12 @@ echo ""
 echo "${_colors_green}Dotfiles symlinked.${_colors_reset}"
 echo ""
 
-if [[ $_dotfiles_dir != "$HOME/my_mac_setup/dotfiles" ]]; then
+if [[ $_dotfiles_dir != "$HOME/new_mac_setup/dotfiles" ]]; then
 	echo "${_colors_red}HEY YOU GOTTA DO THIS TO NOT BREAK STUFF!${_colors_reset}"
 	echo ""
 	echo "You need to modify ${_colors_cyan}.zshrc${_colors_reset} to point to the correct folder."
 	echo ""
-	echo "Replace ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"\$HOME/my_mac_setup/dotfiles${_colors_reset}\" with: ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"${_dotfiles_dir}\""
+	echo "Replace ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"\$HOME/new_mac_setup/dotfiles${_colors_reset}\" with: ${_colors_bold}${_colors_cyan}export DOTFILES_PATH=\"${_dotfiles_dir}\""
 	echo ""
 fi
 
