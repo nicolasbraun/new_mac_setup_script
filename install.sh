@@ -303,9 +303,6 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 
-#"Setting email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
 #"Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default"
 defaults write com.apple.terminal StringEncodings -array 4
 defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
@@ -325,7 +322,7 @@ sudo pmset -a standbydelay 86400
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
 
 #"Setting screenshots location to ~/Desktop/Screenshots"
-mkdir "$HOME/Desktop/Screenshots"
+mkdir -p "$HOME/Desktop/Screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Desktop/Screenshots"
 
 #"Setting screenshot format to PNG"
