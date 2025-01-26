@@ -40,7 +40,7 @@ plugins=(
     encode64
     flutter
     forgit
-	fzf
+#    fzf
     git
     git-extras
     git-prompt
@@ -51,12 +51,10 @@ plugins=(
     nvm
     ruby
     rvm
-    speedycompinit
     terraform
     xcode
     zsh-syntax-highlighting
     z
-	zf
 )
 
 source $DOTFILES_PATH/.oh-my-zsh/oh-my-zsh.sh
