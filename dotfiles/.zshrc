@@ -25,7 +25,7 @@ ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red' 'trash' 'underline,fg=
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort false
 
-DOTFILES_PATH=$HOME/Sources/my_mac_installer
+DOTFILES_PATH=$HOME/new_mac_setup
 ZSH_CUSTOM=$DOTFILES_PATH/zsh-custom
 ZSH_THEME="dpoggi"
 
