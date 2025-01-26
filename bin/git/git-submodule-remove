@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+#
+# Remove a git submodule.
+#
+# Usage:
+#    git submodule-remove path/to/submodule
+#
+# From https://github.com/maximbaz/dotfiles/blob/master/.local/bin/git-submodule-remove
+
+emulate zsh -o err_exit -o no_unset
+
+(( $# == 1 ))
+[[ -e $1 ]]
+
+gitdir=$(git rev-parse --git-dir)
+workdir=$(git rev-parse --show-toplevel)
+
+[[ ${workdir} == "${PWD}" ]]
+
+git submodule deinit -f -- "${1}"
+rm -rf -- "${gitdir}/modules/${1}"
+rm -rf -- "${1}"
+
+$EDITOR .gitmodules

@@ -1,0 +1,1 @@
+for f in *.mp3; do ffmpeg -y -i "$f" -c:a libvorbis -ab 32k -ar 22050 "${f%.mp3}".ogg; done

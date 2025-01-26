@@ -1,0 +1,184 @@
+#            ██   ██                               ████ ██
+#     █████ ░░   ░██                              ░██░ ░░   █████
+#    ██░░░██ ██ ██████  █████   ██████  ███████  ██████ ██ ██░░░██
+#   ░██  ░██░██░░░██░  ██░░░██ ██░░░░██░░██░░░██░░░██░ ░██░██  ░██
+#   ░░██████░██  ░██  ░██  ░░ ░██   ░██ ░██  ░██  ░██  ░██░░██████
+#    ░░░░░██░██  ░██  ░██   ██░██   ░██ ░██  ░██  ░██  ░██ ░░░░░██
+#     █████ ░██  ░░██ ░░█████ ░░██████  ███  ░██  ░██  ░██  █████
+#    ░░░░░  ░░    ░░   ░░░░░   ░░░░░░  ░░░   ░░   ░░   ░░  ░░░░░
+
+[user]
+    name = Nicolas Braun
+    email = braunico@gmail.com
+    github = braunico
+
+[alias]
+    a = add
+    aa = !git add -u && git add . && git status
+
+    amend = commit --amend --reuse-message=HEAD
+
+    s = status
+    st = status -sb
+
+    c = commit
+    ci = commit
+
+    cl = clone
+
+    co = checkout
+    cob = checkout -b
+
+    br = branch
+
+    cp = cherry-pick
+
+    diff = diff --word-diff
+
+    unstage = reset HEAD --
+
+    undo = reset --soft HEAD^
+
+    ls = log --pretty=log --decorate
+    ll = log --pretty=log --decorate --numstat
+    lg = log --pretty=graph --color --graph --abbrev-commit
+    dl = ll -1
+
+    tig = !tig $@
+
+	tree = log --graph --full-history --all --color --date=short --pretty=format:'%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset'
+
+
+[advice]
+    statusHints = false
+    detachedHead = false
+    waitingForEditor = false
+    addEmptyPathspec = false
+
+[branch]
+    autosetupmerge = true
+
+[color "branch"]
+    current = red reverse
+    local = blue
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+# [commit]
+#     gpgSign = true
+
+[core]
+    editor = vim
+    preloadindex = true
+    abbrev = 12
+	excludesfile = /Users/nicolasbraun/Sources/my_mac_installer/dotfiles/.gitignore
+
+[credential]
+    helper = osxkeychain
+
+[delta]
+    features     = syntax line-numbers
+    syntax-theme = "Monokai (SL)"
+
+    commit-decoration-style = bold yellow box ul
+
+    file-style            = bold yellow ul
+    file-decoration-style = none
+
+    hunk-header-style            = bold purple
+    hunk-header-decoration-style = cyan box ul
+
+    line-numbers-left-style  = cyan
+    line-numbers-right-style = cyan
+    line-numbers-minus-style = 124
+    line-numbers-plus-style  = 28
+    line-numbers-left-format = "{nm:^4}│"
+
+    minus-style                   = bright-red
+    minus-non-emph-style          = bright-red
+    minus-emph-style              = bold ul brightred "#901011"
+    minus-empty-line-marker-style = red brightred
+    ; minus-style = brightred
+    ; minus-empty-line-marker-style = red brightred
+    ; minus-emph-style = brightred bold ul auto
+
+    plus-style                   = brightgreen
+    plus-non-emph-style          = brightgreen
+    plus-emph-style              = bold ul brightgreen "#006000"
+    plus-empty-line-marker-style = green brightgreen
+    whitespace-error-style       = reverse purple
+    ; plus-empty-line-marker-style = green brightgreen
+    ; plus-emph-style = brightgreen bold ul auto
+
+    whitespace-error-style = 22 reverse
+
+[difftool]
+    prompt = false
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[gitcvs]
+    commitMsgAnnotation = ""
+
+# [gpg]
+#     program = /usr/local/MacGPG2/bin/gpg
+
+[help]
+    autocorrect = 1
+    format = html
+
+[init]
+    defaultBranch = main
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    tool = Kaleidoscope
+
+[mergetool]
+    prompt = false
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[pager]
+    diff = delta
+    reflog = delta
+#    show = delta
+
+[pretty]
+    log = "%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]"
+    graph = "%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
+
+[pull]
+    rebase = true
+
+[push]
+    default = current
+
+[status]
+    showUntrackedFiles = all
+
+[tag]
+    forceSignAnnotated = true
+    # gpgSign = true
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+
+[submodule]
+	recurse = true

@@ -1,0 +1,4 @@
+.vim/tmp/
+.vim/plugged/*
+
+zsh-custom/_*.zsh

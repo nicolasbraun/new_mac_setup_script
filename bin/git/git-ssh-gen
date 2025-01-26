@@ -1,0 +1,23 @@
+# Check if the function is provided with one or two arguments
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    echo "Usage: git-ssh-gen <name> [email]"
+    return 1
+fi
+
+name=$1
+email="${2:-<>}"
+ssh_dir="$HOME/.ssh"
+
+ssh-keygen -t rsa -f "${ssh_dir}/${name}" -C "${email}"
+
+echo "SSH keys generated successfully:"
+echo "Key: ${ssh_dir}/${name}"
+
+cat "${ssh_dir}/${name}.pub" | pbcopy
+echo "Pub SSH key copied to clipboard"
+
+git config --local --replace-all core.sshCommand "ssh -i ~/.ssh/${name}"
+echo "Git repository configured to use this SSH key"
+
+git config --local user.name "${name}"
+git config --local user.email "${email}"

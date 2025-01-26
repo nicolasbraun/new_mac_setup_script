@@ -1,5 +1,19 @@
-# TODO
+# Usage
 
-Inspired from:
-- https://gist.github.com/ryanhanwu/059e210f8fe15e7eadc4a28e8b3e6b27
-- https://gist.github.com/bradp/bea76b16d3325f5c47d4
+Used to setup a new Mac quickly.
+Mostly inspired from : https://github.com/bradp/dotfiles
+
+**To Install**
+
+```shell
+# Clone this repository to ~/Sources (with submodules)
+$ git clone --recursive git@github.com:bradp/dotfiles.git ~/Sources/my_mac_installer
+# Run the installer
+$ bash ~/Sources/install.sh
+```
+
+**To Update**
+
+```shell
+$ bash ~/Sources/update.sh
+```
