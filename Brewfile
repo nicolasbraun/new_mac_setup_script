@@ -34,7 +34,7 @@ brew 'pyenv-virtualenv'
 cask 'appcleaner'
 # cask "android-file-transfer"
 cask 'battle-net'
-cask 'bitwarden'
+mas 'Bitwarden', id : 1352778147
 brew 'bitwarden-cli'
 cask 'coconutbattery'
 cask 'discord'
