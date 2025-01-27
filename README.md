@@ -10,7 +10,7 @@ Mostly inspired from : https://github.com/bradp/dotfiles
 # Use HTTPs URL if you SSH is not set yet!
 $ git clone --recursive https://github.com/nicolasbraun/new_mac_setup.git ~/new_mac_setup
 # Run the installer
-$ bash ~/new_mac_setup/install.sh
+$ sh ~/new_mac_setup/install.sh
 ```
 
 **To Update**
