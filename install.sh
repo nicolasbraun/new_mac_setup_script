@@ -138,7 +138,6 @@ fi
 #                                         #
 ###########################################
 
-# SSH
 echo "${_colors_bold}Creating an SSH Key...${_colors_reset}"
 read -p "Would you like to create a new SSH key? [y/n]" -n 1 -r
 echo # (optional) move to a new line
@@ -345,7 +344,15 @@ defaults write org.m0k.transmission WarningDonate -bool false
 defaults write org.m0k.transmission WarningLegal -bool false
 
 killall Finder
-echo "Done. You may need to reboot for some to take effect."
+
+echo ""
+read -p "Would you like to remove all Dock persistent icons ? [y/n]"  -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    defaults write com.apple.dock persistent-apps -array
+fi
+killall Dock
+echo "${_colors_bold}Done. You may need to reboot for some to take effect.${_colors_reset}"
 
 ###########################################
 #                                         #
@@ -354,29 +361,29 @@ echo "Done. You may need to reboot for some to take effect."
 ###########################################
 
 echo "${_colors_bold}There is still some manual stuff to do...${_colors_reset}"
-
-echo "In Keyboard setting"
-echo "Change the shortcut to 'Move focus to next window' Alt+tab is a good one"
-echo "Disable Spotlight."
-read -p "Press [Enter] to open Preferences"
-open "x-apple.systempreferences:com.apple.preference.keyboard"
-
-echo "Launch Raycast and restore your backup file"
-read -p "Press [Enter] to open Raycast"
-open "Applications/RayRaycast.app"
-
-echo "[VSCODE] Login to sync settings"
-read -p "Press [Enter] to open VSCode"
-open "/Applications/Visual\ Studio\ Code.app"
-
-echo "[Firefox]"
-echo "- Login in"
-echo "- Restore sideberry backup"
-read -p "Press [Enter] to open Firefox"
-open "/Applications/Firefox.app"
-
-echo "[Finder]"
-echo "- Set the sidebar favorites"
-read -p "Press [Enter] to finish this installation"
+echo ""
+echo "${_colors_bold}In Keyboard setting${_colors_reset}"
+echo "	- Change the shortcut to 'Move focus to next window' Alt+tab is a good one"
+echo "	- Disable Spotlight."
+echo "${_colors_bold}Raycast${_colors_reset}"
+echo "	- Import your backupfile."
+echo "${_colors_bold}Firefox${_colors_reset}"
+echo "	- Login"
+echo "	- Import Sideberry backup"
+echo ""
+echo "${_colors_bold}Finder${_colors_reset}"
+echo "	- Set the sidebar favorites"
+echo "	- Clean dock"
+read -p "Would you like to try to automaticaly open those ? [y/n]"  -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    open "x-apple.systempreferences:com.apple.preference.keyboard" || echo "Failed to open Preferences"
+    open "Applications/RayRaycast.app" || echo "Failed to open Raycast.app."
+    open "/Applications/Visual\ Studio\ Code.app" || echo "Failed to open VSCode"
+    open "/Applications/Firefox.app"|| echo "Failed to open Firefox"
+ else
+  echo "Skipping opening apps"
+  echo ""
+fi
 
 echo "${_colors_bold}${_colors_green}All done! Check for errors and reload if needed.${_colors_reset}"
