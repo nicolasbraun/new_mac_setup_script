@@ -42,6 +42,7 @@ echo "Install Homebrew Packages from BrewFile, this might take a while"
 brew tap homebrew/bundle
 brew bundle --file=Brewfile || echo "${_colors_red}Could not install all brew packages. Check and relaunch${_colors_reset}"
 echo "Cleaning up brew"
+sudo xcodebuild -license accept
 brew cleanup
 
 ###########################################
@@ -144,7 +145,7 @@ echo # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 	ssh-keygen -t rsa
  	echo "SSH key created."
-	cat ~/.ssh/cat id_rsa.pub | pbcopy
+	cat ~/.ssh/id_rsa.pub | pbcopy
  	echo -e "${_colors_bold}${_colors_cyan}Please add this public key to Github${_colors_reset}"
 	echo -e "https://github.com/account/ssh"
 	read -p "Press [Enter] key to continue"
