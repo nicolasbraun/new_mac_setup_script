@@ -1,7 +1,6 @@
 # Usage
 
 Used to setup a new Mac quickly.
-Mostly inspired from : https://github.com/bradp/dotfiles
 
 **To Install**
 
@@ -18,3 +17,6 @@ $ sh ~/new_mac_setup/install.sh
 ```shell
 $ bash ~/update.sh
 ```
+
+
+Mostly inspired from : https://github.com/bradp/dotfiles
