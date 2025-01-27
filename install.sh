@@ -362,9 +362,10 @@ echo "${_colors_bold}Done. You may need to reboot for some to take effect.${_col
 
 echo "${_colors_bold}There is still some manual stuff to do...${_colors_reset}"
 echo ""
-echo "${_colors_bold}In Keyboard setting${_colors_reset}"
-echo "	- Change the shortcut to 'Move focus to next window' Alt+tab is a good one"
-echo "	- Disable Spotlight."
+echo "${_colors_bold}In MACOS setting${_colors_reset}"
+echo "	- Keyboard: Change the shortcut to 'Move focus to next window' Alt+tab is a good one"
+echo "	- Keyboard: Disable Spotlight."
+echo "  - Password: Set bitwarden as source
 echo "${_colors_bold}Raycast${_colors_reset}"
 echo "	- Import your backupfile."
 echo "${_colors_bold}Firefox${_colors_reset}"
