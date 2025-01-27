@@ -6,7 +6,6 @@ cask_args appdir: "/Applications", require_sha: false
 
 # CLI Global utilities
 brew 'coreutils'
-brew 'dockutil'
 brew 'docker-compose'
 brew 'ffmpeg'
 brew 'gnupg'
