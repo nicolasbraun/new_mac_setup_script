@@ -380,7 +380,7 @@ read -p "Would you like to try to automaticaly open those ? [y/n]"  -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     open "x-apple.systempreferences:com.apple.preference.keyboard" || echo "Failed to open Preferences"
-    open "Applications/RayRaycast.app" || echo "Failed to open Raycast.app."
+    open "/Applications/Raycast.app" || echo "Failed to open Raycast.app."
     open "/Applications/Visual\ Studio\ Code.app" || echo "Failed to open VSCode"
     open "/Applications/Firefox.app"|| echo "Failed to open Firefox"
  else
